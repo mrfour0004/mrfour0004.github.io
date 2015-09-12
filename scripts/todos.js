@@ -44,10 +44,13 @@ var TodoApp = {
       obj.success(list);
     });
   },
+  set: function(list) {
+    localforage.setItem(this.Key, list, null);
+  },
   save: function(list) {
     localforage.setItem(this.Key, list);
   },
-  clear: function() {
+  clear: function(callback) {
     localforage.clear();
     localforage.setItem(this.Key, [], null);
   }
