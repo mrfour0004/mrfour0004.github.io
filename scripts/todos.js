@@ -1,5 +1,5 @@
-function Todo(description, index) {
-  this.status = "Active";
+function Todo(description) {
+  this.id = new Date().valueOf();
   this.completed = false;
   this.description = description;
 }
@@ -13,7 +13,8 @@ var TodoApp = {
   },
   getList: function(callback) {
     localforage.getItem(this.Key, function(err, value) {
-      callback(value);
+      if (value == null) callback([]);
+      else callback(value);
     });
   },
   getCompletedList: function() {
@@ -21,7 +22,7 @@ var TodoApp = {
   },
   append: function(obj) {;
     TodoApp.getList(function(list) {
-      var item = new Todo(obj.description);
+      var item = new Todo(obj.description, obj.index);
       list.push(item);
 
       TodoApp.save(list);
@@ -32,13 +33,11 @@ var TodoApp = {
     TodoApp.getList(function(list) {
       list[obj.index] = obj.item;
       TodoApp.save(list);
-
       obj.success(list);
     });
   },
   delete: function(obj) {
     TodoApp.getList(function(list) {
-      //list[obj.index].status = "Deleted";
       list.splice(obj.index, 1);
       TodoApp.save(list);
 

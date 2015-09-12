@@ -1,0 +1,81 @@
+* {
+  margin: 0px;
+  padding: 0px;
+  box-sizing: border-box;
+}
+
+ul, ol {
+	list-style: none;
+}
+body {
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+}
+html, body, #content {
+  height: 100%;
+  width: 100%;
+}
+
+input {
+  outline: none;
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+.todoBox {
+  width: 500px;
+  margin: auto;
+  margin-top: 100px;
+  box-shadow: 0px 0px 30px 2px #DCDCDC;
+}
+
+.todoBox > * {
+  width: 100%;
+}
+
+.todoInput {
+  padding: 15px 35px;
+  font-size: 25px;
+  font-weight: 100;
+  border: none;
+  border-bottom: 1px solid #EAEAEA;
+  box-shadow: inset 0px -5px 15px -10px #A7A7A7;
+}
+
+.todoList {
+
+}
+
+.todoItem {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  border-bottom: 1px solid #EAEAEA;
+}
+
+.todoToggle, .todoDelete {
+  height: 55px;
+  width: 55px;
+}
+
+.todoToggle {
+
+}
+.todoToggle:checked:after {
+      content: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="40"…3"/><path fill="#5dc2af" d="M72 25L42 71 27 56l-4 4 20 20 34-52z"/></svg>');
+}
+.todoToggle:after {
+      content: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="40"…"50" cy="50" r="50" fill="none" stroke="#ededed" stroke-width="3"/></svg>');
+}
+
+
+.todoDescription {
+  flex: 1;
+  border: none;
+  padding: 10px 10px;
+  line-height: 30px;
+  font-size: 30px;
+}
+
+.todoDelete {
+
+}

@@ -15,7 +15,7 @@ var TodoInput = React.createClass({
   },
   render: function() {
     return (
-      <input type="text" placeholder="What needs to be done?" onChange={this.handleChange} onKeyDown={this.handleKeyDown} ref="todoText" />
+      <input className="todoInput" type="text" placeholder="What needs to be done?" onChange={this.handleChange} onKeyDown={this.handleKeyDown} ref="todoText" />
     )
   }
 })
@@ -32,38 +32,39 @@ var TodoDescription = React.createClass({
   },
   render: function() {
     var value = this.state.value;
-    return <input type="text" value={this.state.value} onChange={this.handleChange} />;
+    return <input className="todoDescription" type="text" value={this.state.value} onChange={this.handleChange} />;
   }
 });
 
 var TodoItem = React.createClass({
+  getInitialState: function() {
+    return { data: this.props.data }
+  },
   handleToggle: function(e) {
     var checked = e.target.checked;
-    this.props.data.checked = checked;
-    this.props.data.status = (checked) ? "completed" : "active";
+    this.state.data.completed = checked;
 
-    if (checked) {
-      $(this.getDOMNode).addClass("completed");
-    } else {
-      $(this.getDOMNode).removeClass("compoleted");
-    }
-
-    this.props.onUpdate(this.props.todoid, this.props.data);
+    this.props.onUpdate(this.props.todoid, this.state.data);
   },
   handleDelete: function(e) {
     this.props.onDelete(this.props.todoid);
-    //$(this.getDOMNode()).remove()
   },
   componentDidMount: function() {
-    this.getDOMNode().querySelector('[type="checkbox"]').checked = this.props.data.checked;
-    if (this.props.data.status == "Deleted") $(this.getDOMNode()).css({display: "none"});
+    this.getDOMNode().querySelector('[type="checkbox"]').checked = this.state.data.completed;
+  },
+  componentWillUnmount: function() {
+    console.log("unmounting...")
   },
   render: function(){
+    var classes = React.addons.classSet({
+      "todoItem": true,
+      "completed": this.state.data.completed
+    })
     return (
-      <li className="todoItem">
-        <input type="checkbox" onChange={this.handleToggle} />
+      <li className={classes}>
+        <input className="todoToggle" type="checkbox" onChange={this.handleToggle} />
         <TodoDescription description={this.props.data.description} />
-        <span className="TodoDelete" onClick={this.handleDelete}>x</span>
+        <span className="todoDelete" onClick={this.handleDelete}>x</span>
       </li>
     );
   }
@@ -71,11 +72,16 @@ var TodoItem = React.createClass({
 
 
 var TodoList = React.createClass({
+  getInitialState: function() {
+    return {
+      data: this.props.data
+    }
+  },
   render: function() {
     return (
       <ul className="todoList">
-        {this.props.data.map(function(item, index) {
-          return <TodoItem key={index} todoid={index} onUpdate={this.props.onUpdate} onDelete={this.props.onDelete} data={item} />
+        {this.state.data.map(function(item, index) {
+          return <TodoItem key={item.id} todoid={index} onUpdate={this.props.onUpdate} onDelete={this.props.onDelete} data={item} />
         }.bind(this))}
       </ul>
     )
@@ -94,7 +100,7 @@ var TodoFilterRadio = React.createClass({
     return (
       <div className="todoToggle">
         <input type="radio" name="todoFilter" id={id} value={filter} onChange={this.handleChange} />
-        <label for={id}>{this.props.filter}</label>
+        <label htmlFor={id}>{this.props.filter}</label>
       </div>
     )
   }
@@ -130,19 +136,19 @@ var TodoBox = React.createClass({
       data: this.props.data
     }
   },
-  successCallback: function(list) {
-    this.setState({data: list})
-  }.bind(this),
   handleFilter: function(filterType) {
+    var todoList = $(React.findDOMNode(this.refs.TodoList));
     switch (filterType) {
       case "all":
-        console.log("All selected")
+        todoList.children().removeClass("hide");
         break;
       case "active":
-        $(this.getDOMNode.querySelector("")).addClass()
+        todoList.children(".completed").removeClass("hide");
+        todoList.children("li:not(.completed)").addClass("hide");
         break;
       case "completed":
-        console.log("Completed selected")
+        todoList.children(".completed").addClass("hide");
+        todoList.children("li:not(.completed)").removeClass("hide");
         break;
     }
   },
@@ -150,7 +156,7 @@ var TodoBox = React.createClass({
     TodoApp.append({
       description: description,
       success: function(list) {
-        this.setState({data: list})
+        this.refs.TodoList.setState({data: list});
       }.bind(this)
     });
   },
@@ -159,7 +165,7 @@ var TodoBox = React.createClass({
       index: index,
       item: item,
       success: function(list) {
-        data: update(this.state.data, {$splice: [[index, 1]]})
+        this.refs.TodoList.setState({data: list});
       }.bind(this)
     })
   },
@@ -167,17 +173,15 @@ var TodoBox = React.createClass({
     TodoApp.delete({
       index: index,
       success: function(list) {
-        this.setState({
-          data: update(this.state.data, {$splice: [[index, 1]]})
-        });
+        this.refs.TodoList.setState({data: React.addons.update(this.refs.TodoList.state.data, {$splice: [[index, 1]]})});
       }.bind(this)
     });
   },
   render: function() {
     return (
-      <div className="TodoBox">
+      <div className="todoBox">
         <TodoInput onEnterKeyDown={this.append} />
-        <TodoList onUpdate={this.update} onDelete={this.delete} data={this.state.data} />
+        <TodoList onUpdate={this.update} onDelete={this.delete} data={this.state.data} ref="TodoList" />
         <TodoFooter todoCount={this.state.data.length} onFilterChange={this.handleFilter} />
       </div>
     );
@@ -185,9 +189,8 @@ var TodoBox = React.createClass({
 });
 
 TodoApp.getList(function(data) {
-  console.log(data);
   React.render(
-    <TodoBox data={data}/>,
+    <TodoBox data={data} />,
     document.getElementById("content")
   );
 })
