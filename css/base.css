@@ -8,8 +8,8 @@ ul, ol {
 	list-style: none;
 }
 body, input, button {
-  font-family: 'Josefin Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
-  font-weight: 300;
+  font-family: 'Work Sans', 'Josefin Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-weight: 200;
 }
 
 input {
@@ -19,6 +19,7 @@ input {
 html, body, #content {
   height: 100%;
   width: 100%;
+  background-color: #f8f8f8;
 }
 
 input, button {
@@ -32,6 +33,7 @@ input, button {
   margin: auto;
   margin-top: 100px;
   box-shadow: 0px 0px 30px 2px #DCDCDC;
+  background-color: white;
 }
 
 .todoBox > * {
@@ -92,9 +94,17 @@ input, button {
   border-radius: 50%;
 }
 
+.todoToggle:checked {
+  border-color: #5dc2af;
+}
+
+.todoToggle {
+  transition: border-color ease-in-out 50ms;
+}
+
 .todoToggle:checked::after, .todoToggle:checked::before {
   width: 1px;
-  background-color: gray;
+  opacity: 1;
 }
 
 .todoToggle:checked::after {
@@ -103,6 +113,13 @@ input, button {
   -webkit-transform: rotate(40deg) translate(2px, -1px);
 }
 
+.todoToggle::after, .todoToggle::before {
+  opacity: 0;
+  height: 0px;
+  background-color: #5dc2af;
+  transition: height ease-in-out 100ms, transform ease-in-out 100ms;
+  -webkit-transition: height ease-in-out 100ms, -webkit-transform ease-in-out 100ms;
+}
 .todoToggle:checked::before {
   height: 7px;
   transform: rotate(-41deg) translate(-6px, 0px);
@@ -129,7 +146,10 @@ input, button {
   /*content: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="40"…"50" cy="50" r="50" fill="none" stroke="#ededed" stroke-width="3"/></svg>');*/
 }
 
-
+.completed .todoDescription {
+  text-decoration: line-through;
+  color: #ddd;
+}
 .todoDescription {
   flex: 1;
   -webkit-flex: 1;
@@ -137,6 +157,8 @@ input, button {
   padding: 10px 10px;
   line-height: 30px;
   font-size: 30px;
+  transition: color ease-in-out 100ms;
+  -webkit-transition: color ease-in-out 100ms;
 }
 
 
@@ -182,7 +204,21 @@ input, button {
 }
 
 .todoSwitch {
-  margin: 5px 10px;
+
+}
+
+[type="radio"] {
+  display: none;
+}
+
+[type="radio"] + label {
+  padding: 5px 10px;
+}
+
+[type="radio"]:checked + label {
+  border: 1px solid rgba(93, 194, 175, 0.5);
+  border-radius: 3px;
+  color: #5dc2af;
 }
 
 .btn-clr {

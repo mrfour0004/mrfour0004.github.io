@@ -1,5 +1,3 @@
-//require('react/addons');
-
 var TodoInput = React.createClass({
   handleChange: function(e) {
     this.value = e.target.value
@@ -20,37 +18,36 @@ var TodoInput = React.createClass({
   }
 })
 
-var TodoDescription = React.createClass({
-  getInitialState: function() {
-    return {value: this.props.description};
-  },
-  componentDidMount: function() {
-    this.value = this.state.value;
-  },
-  handleChange: function(event) {
-    this.setState({value: event.target.value});
-  },
-  render: function() {
-    var value = this.state.value;
-    return <input className="todoDescription" type="text" value={this.state.value} onChange={this.handleChange} />;
-  }
-});
-
 var TodoItem = React.createClass({
-  getInitialState: function() {
-    return { data: this.props.data }
-  },
   handleToggle: function(e) {
-    var checked = e.target.checked;
-    this.state.data.completed = checked;
+    var item = this.props.data;
+    item.completed = e.target.checked;
+    this.props.onUpdate(this.props.todoid, item);
+  },
+  handleDoubleClick: function(e) {
+    console.log("hid")
+    e.target.disabled = !e.target.disabled;
+  },
+  handleKeyDown: function (e) {
+    if (e.keyCode != 13) {
+      return;
+    }
+    e.preventDefault();
 
-    this.props.onUpdate(this.props.todoid, this.state.data);
+    var item = this.props.data;
+    item.description = e.target.value;
+    this.props.onUpdate(this.props.todoid, item);
+
+    e.target.disabled = true;
+  },
+  handleChange: function(e) {
+    this.getDOMNode().querySelector('.todoDescription').value = e.target.value;
   },
   handleDelete: function(e) {
     this.props.onDelete(this.props.todoid);
   },
   componentDidMount: function() {
-    this.getDOMNode().querySelector('[type="checkbox"]').checked = this.state.data.completed;
+    this.getDOMNode().querySelector('.todoDescription').value = this.props.data.description;
   },
   componentWillUnmount: function() {
 
@@ -58,12 +55,12 @@ var TodoItem = React.createClass({
   render: function(){
     var classes = React.addons.classSet({
       "todoItem": true,
-      "completed": this.state.data.completed
+      "completed": this.props.data.completed
     })
     return (
       <li className={classes}>
-        <input className="todoToggle" type="checkbox" onChange={this.handleToggle} />
-        <TodoDescription description={this.props.data.description} />
+        <input className="todoToggle" type="checkbox" onChange={this.handleToggle} checked={this.props.data.completed} />
+        <input className="todoDescription" type="text" onDoubleClick={this.handleDoubleClick} onChange={this.handleChange} onKeyDown={this.handleKeyDown} disabled />
         <span className="todoDelete" onClick={this.handleDelete}></span>
       </li>
     );
@@ -72,15 +69,10 @@ var TodoItem = React.createClass({
 
 
 var TodoList = React.createClass({
-  getInitialState: function() {
-    return {
-      data: this.props.data
-    }
-  },
   render: function() {
     return (
       <ul className="todoList">
-        {this.state.data.map(function(item, index) {
+        {this.props.data.map(function(item, index) {
           return <TodoItem key={item.id} todoid={index} onUpdate={this.props.onUpdate} onDelete={this.props.onDelete} data={item} />
         }.bind(this))}
       </ul>
@@ -121,15 +113,10 @@ var TodoFilter = React.createClass({
 })
 
 var TodoFooter = React.createClass({
-  getInitialState: function() {
-    return {
-      counts: this.props.counts
-    }
-  },
   render: function (argument) {
     return (
       <div className="todoFooter">
-        <span className="countsNumber">{this.state.counts}</span><span className="countsNumber">items left</span>
+        <span className="countsNumber">{this.props.counts}</span><span className="countsNumber">items left</span>
         <TodoFilter onFilterChange={this.props.onFilterChange} />
         <button onClick={this.props.onClearCompleted} className="btn-clr">Clear Completed</button>
       </div>
@@ -139,9 +126,18 @@ var TodoFooter = React.createClass({
 
 var TodoBox = React.createClass({
   getInitialState: function() {
+    var activeCounts = 0;
+    $.each(this.props.data, function(index, item) {
+      if (!item.completed) activeCounts++;
+    })
+
     return {
-      data: this.props.data
+      data: this.props.data,
+      activeCounts: activeCounts
     }
+  },
+  getActiveCountes: function() {
+    return $(React.findDOMNode(this.refs.TodoList)).children("li:not(.completed)").length;
   },
   handleFilter: function(filterType) {
     var todoList = $(React.findDOMNode(this.refs.TodoList));
@@ -163,8 +159,9 @@ var TodoBox = React.createClass({
     TodoApp.append({
       description: description,
       success: function(list) {
-        this.refs.TodoList.setState({data: list});
-        this.refs.TodoFooter.setState({counts: list.length});
+        this.setState({data: list});
+        console.log(this.getActiveCountes)
+        this.setState({activeCounts: this.getActiveCountes()});
       }.bind(this)
     });
   },
@@ -173,7 +170,8 @@ var TodoBox = React.createClass({
       index: index,
       item: item,
       success: function(list) {
-        this.refs.TodoList.setState({data: list});
+        this.setState({data: list});
+        this.setState({activeCounts: this.getActiveCountes()});
       }.bind(this)
     })
   },
@@ -181,25 +179,25 @@ var TodoBox = React.createClass({
     TodoApp.delete({
       index: index,
       success: function(list) {
-        this.refs.TodoList.setState({data: React.addons.update(this.refs.TodoList.state.data, {$splice: [[index, 1]]})});
-        this.refs.TodoFooter.setState({counts: list.length})
+        this.setState({data: React.addons.update(this.state.data, {$splice: [[index, 1]]})});
+        this.setState({activeCounts: this.getActiveCountes()});
       }.bind(this)
     });
   },
   clear: function() {
     TodoApp.clear();
-    this.refs.TodoList.setState({data: []});
+    this.setState({data: []});
     this.refs.TodoFooter.setState({counts: 0})
   },
   clearCompleted: function() {
-    var list = this.refs.TodoList.state.data;
+    var list = this.state.data;
     for (var i = 0; i < list.length; i++) {
       if (list[i].completed) {
         list.splice(i--, 1);
       }
     }
     TodoApp.set(list);
-    this.refs.TodoList.setState({data: React.addons.update(this.refs.TodoList.state.data, {$set: list})});
+    this.setState({data: React.addons.update(this.state.data, {$set: list})});
     this.refs.TodoFooter.setState({counts: list.length});
   },
   render: function() {
@@ -207,7 +205,7 @@ var TodoBox = React.createClass({
       <div className="todoBox">
         <TodoInput onEnterKeyDown={this.append} />
         <TodoList onUpdate={this.update} onDelete={this.delete} data={this.state.data} ref="TodoList" />
-        <TodoFooter counts={this.state.data.length} onClearCompleted={this.clearCompleted} onClear={this.clear} onFilterChange={this.handleFilter} ref="TodoFooter" />
+        <TodoFooter counts={this.state.activeCounts} onClearCompleted={this.clearCompleted} onClear={this.clear} onFilterChange={this.handleFilter} ref="TodoFooter" />
       </div>
     );
   }
