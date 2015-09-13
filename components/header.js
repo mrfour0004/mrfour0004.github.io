@@ -53,9 +53,11 @@ var TodoItem = React.createClass({
 
   },
   render: function(){
+    var hide = (this.props.data.completed == true && this.props.filterType == "completed") || (this.props.data.completed == false && this.props.filterType == "active");
     var classes = React.addons.classSet({
       "todoItem": true,
-      "completed": this.props.data.completed
+      "completed": this.props.data.completed,
+      "hide": this.props.filterType != "all" && !hide
     })
     return (
       <li className={classes}>
@@ -73,7 +75,7 @@ var TodoList = React.createClass({
     return (
       <ul className="todoList">
         {this.props.data.map(function(item, index) {
-          return <TodoItem key={item.id} todoid={index} onUpdate={this.props.onUpdate} onDelete={this.props.onDelete} data={item} />
+          return <TodoItem key={item.id} todoid={index} filterType={this.props.filterType} onUpdate={this.props.onUpdate} onDelete={this.props.onDelete} data={item} />
         }.bind(this))}
       </ul>
     )
@@ -97,6 +99,7 @@ var TodoFilterRadio = React.createClass({
     )
   }
 });
+
 var TodoFilter = React.createClass({
   componentDidMount: function() {
     this.getDOMNode().querySelector('#todoFilter-all').checked = true;
@@ -104,9 +107,9 @@ var TodoFilter = React.createClass({
   render: function() {
     return (
       <div className="todoSwitchBox">
-        <TodoFilterRadio filter="All" checked={true} onFilterChange={this.props.onFilterChange} />
-        <TodoFilterRadio filter="Active" checked={false} onFilterChange={this.props.onFilterChange} />
-        <TodoFilterRadio filter="Completed" checked={false} onFilterChange={this.props.onFilterChange} />
+        <TodoFilterRadio filter="all" checked={true} onFilterChange={this.props.onFilterChange} />
+        <TodoFilterRadio filter="active" checked={false} onFilterChange={this.props.onFilterChange} />
+        <TodoFilterRadio filter="completed" checked={false} onFilterChange={this.props.onFilterChange} />
       </div>
     )
   }
@@ -133,27 +136,15 @@ var TodoBox = React.createClass({
 
     return {
       data: this.props.data,
-      activeCounts: activeCounts
+      activeCounts: activeCounts,
+      filterType: "all"
     }
   },
   getActiveCountes: function() {
     return $(React.findDOMNode(this.refs.TodoList)).children("li:not(.completed)").length;
   },
   handleFilter: function(filterType) {
-    var todoList = $(React.findDOMNode(this.refs.TodoList));
-    switch (filterType) {
-      case "all":
-        todoList.children().removeClass("hide");
-        break;
-      case "active":
-        todoList.children(".completed").addClass("hide");
-        todoList.children("li:not(.completed)").removeClass("hide");
-        break;
-      case "completed":
-        todoList.children(".completed").removeClass("hide");
-        todoList.children("li:not(.completed)").addClass("hide");
-        break;
-    }
+    this.setState({filterType: React.addons.update(this.state.filterType, {$set: filterType})});    
   },
   append: function(description) {
     TodoApp.append({
@@ -187,7 +178,7 @@ var TodoBox = React.createClass({
   clear: function() {
     TodoApp.clear();
     this.setState({data: []});
-    this.refs.TodoFooter.setState({counts: 0})
+    this.setState({activeCounts: this.getActiveCountes()});
   },
   clearCompleted: function() {
     var list = this.state.data;
@@ -198,13 +189,13 @@ var TodoBox = React.createClass({
     }
     TodoApp.set(list);
     this.setState({data: React.addons.update(this.state.data, {$set: list})});
-    this.refs.TodoFooter.setState({counts: list.length});
+    this.setState({activeCounts: this.getActiveCountes()});
   },
   render: function() {
     return (
       <div className="todoBox">
         <TodoInput onEnterKeyDown={this.append} />
-        <TodoList onUpdate={this.update} onDelete={this.delete} data={this.state.data} ref="TodoList" />
+        <TodoList onUpdate={this.update} onDelete={this.delete} data={this.state.data} filterType={this.state.filterType} ref="TodoList" />
         <TodoFooter counts={this.state.activeCounts} onClearCompleted={this.clearCompleted} onClear={this.clear} onFilterChange={this.handleFilter} ref="TodoFooter" />
       </div>
     );
