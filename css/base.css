@@ -159,8 +159,15 @@ input, button {
   font-size: 30px;
   transition: color ease-in-out 100ms;
   -webkit-transition: color ease-in-out 100ms;
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
 }
 
+.todoDescription:focus {
+  color: #000;
+  font-weight: 200;
+}
 
 
 .todoDelete::after, .todoDelete::before {

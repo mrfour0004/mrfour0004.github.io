@@ -1,23 +1,3 @@
-var TodoInput = React.createClass({
-  handleChange: function(e) {
-    this.value = e.target.value
-  },
-  handleKeyDown: function(e) {
-    if (e.keyCode != 13) {
-      return;
-    }
-    e.preventDefault();
-
-    this.props.onEnterKeyDown(this.value)
-    e.target.value = ''
-  },
-  render: function() {
-    return (
-      <input className="todoInput" type="text" placeholder="What needs to be done?" onChange={this.handleChange} onKeyDown={this.handleKeyDown} ref="todoText" />
-    )
-  }
-})
-
 var TodoItem = React.createClass({
   handleToggle: function(e) {
     var item = this.props.data;
@@ -25,8 +5,12 @@ var TodoItem = React.createClass({
     this.props.onUpdate(this.props.todoid, item);
   },
   handleDoubleClick: function(e) {
-    console.log("hid")
-    e.target.disabled = !e.target.disabled;
+    e.preventDefault();
+    if (e.target.disabled && !this.props.data.completed) e.target.disabled = false;
+    e.target.focus();
+  },
+  handleBlur: function(e) {
+    e.target.disabled = true;
   },
   handleKeyDown: function (e) {
     if (e.keyCode != 13) {
@@ -40,17 +24,8 @@ var TodoItem = React.createClass({
 
     e.target.disabled = true;
   },
-  handleChange: function(e) {
-    this.getDOMNode().querySelector('.todoDescription').value = e.target.value;
-  },
   handleDelete: function(e) {
     this.props.onDelete(this.props.todoid);
-  },
-  componentDidMount: function() {
-    this.getDOMNode().querySelector('.todoDescription').value = this.props.data.description;
-  },
-  componentWillUnmount: function() {
-
   },
   render: function(){
     var hide = (this.props.data.completed == true && this.props.filterType == "completed") || (this.props.data.completed == false && this.props.filterType == "active");
@@ -62,7 +37,7 @@ var TodoItem = React.createClass({
     return (
       <li className={classes}>
         <input className="todoToggle" type="checkbox" onChange={this.handleToggle} checked={this.props.data.completed} />
-        <input className="todoDescription" type="text" onDoubleClick={this.handleDoubleClick} onChange={this.handleChange} onKeyDown={this.handleKeyDown} disabled />
+        <input className="todoDescription" onBlur={this.handleBlur} defaultValue={this.props.data.description} onDoubleClick={this.handleDoubleClick} onKeyDown={this.handleKeyDown} disabled />
         <span className="todoDelete" onClick={this.handleDelete}></span>
       </li>
     );
@@ -144,17 +119,23 @@ var TodoBox = React.createClass({
     return $(React.findDOMNode(this.refs.TodoList)).children("li:not(.completed)").length;
   },
   handleFilter: function(filterType) {
-    this.setState({filterType: React.addons.update(this.state.filterType, {$set: filterType})});    
+    this.setState({filterType: React.addons.update(this.state.filterType, {$set: filterType})});
   },
-  append: function(description) {
+  append: function(e) {
+    if (e.keyCode != 13) {
+      return;
+    }
+    e.preventDefault();
+
     TodoApp.append({
-      description: description,
+      description: e.target.value,
       success: function(list) {
         this.setState({data: list});
-        console.log(this.getActiveCountes)
         this.setState({activeCounts: this.getActiveCountes()});
       }.bind(this)
     });
+
+    e.target.value = '';
   },
   update: function(index, item) {
     TodoApp.update({
@@ -194,9 +175,9 @@ var TodoBox = React.createClass({
   render: function() {
     return (
       <div className="todoBox">
-        <TodoInput onEnterKeyDown={this.append} />
+        <input className="todoInput" type="text" placeholder="What needs to be done?" onKeyDown={this.append} />
         <TodoList onUpdate={this.update} onDelete={this.delete} data={this.state.data} filterType={this.state.filterType} ref="TodoList" />
-        <TodoFooter counts={this.state.activeCounts} onClearCompleted={this.clearCompleted} onClear={this.clear} onFilterChange={this.handleFilter} ref="TodoFooter" />
+        <TodoFooter counts={this.state.activeCounts} onClearCompleted={this.clearCompleted} onClear={this.clear} onFilterChange={this.handleFilter} />
       </div>
     );
   }
@@ -207,4 +188,4 @@ TodoApp.getList(function(data) {
     <TodoBox data={data} />,
     document.getElementById("content")
   );
-})
+});
