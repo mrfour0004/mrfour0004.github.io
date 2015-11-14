@@ -1,0 +1,280 @@
+@charset "UTF-8";
+/* line 1, ../scss/_todoMVC.scss */
+.todoBox {
+  width: 500px;
+  margin: auto;
+  margin-top: 100px;
+  box-shadow: 0px 0px 30px 2px #DCDCDC;
+  background-color: white; }
+  /* line 8, ../scss/_todoMVC.scss */
+  .todoBox input {
+    font-weight: 100; }
+  /* line 12, ../scss/_todoMVC.scss */
+  .todoBox input, .todoBox button {
+    font-family: 'Work Sans', 'Josefin Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    font-weight: 200; }
+  /* line 18, ../scss/_todoMVC.scss */
+  .todoBox > * {
+    width: 100%; }
+  /* line 23, ../scss/_todoMVC.scss */
+  .todoBox .todoInput {
+    padding: 15px 35px;
+    font-size: 25px;
+    font-style: italic;
+    border: none;
+    border-bottom: 1px solid #EAEAEA;
+    box-shadow: inset 0px -5px 15px -10px #A7A7A7; }
+  /* line 36, ../scss/_todoMVC.scss */
+  .todoBox .todoItem {
+    height: 55px;
+    display: flex;
+    display: -webkit-flex;
+    flex-direction: row;
+    -webkit-flex-direction: row;
+    justify-content: flex-start;
+    -webkit-justify-content: flex-start;
+    border-bottom: 1px solid #EAEAEA;
+    transition: all ease-in-out 150ms; }
+  /* line 48, ../scss/_todoMVC.scss */
+  .todoBox .todoItem.hide {
+    height: 0px;
+    opacity: 0; }
+  /* line 53, ../scss/_todoMVC.scss */
+  .todoBox .todoDelete, .todoBox .todoToggle {
+    position: relative; }
+  /* line 57, ../scss/_todoMVC.scss */
+  .todoBox .todoItem:hover .todoDelete {
+    opacity: 1;
+    pointer-events: auto; }
+  /* line 62, ../scss/_todoMVC.scss */
+  .todoBox .todoDelete {
+    opacity: 0;
+    pointer-events: none;
+    height: 55px;
+    width: 55px; }
+  /* line 69, ../scss/_todoMVC.scss */
+  .todoBox .todoToggle {
+    width: 30px;
+    height: 30px;
+    margin: 12.5px;
+    border: 1px solid #ccc;
+    border-radius: 50%; }
+  /* line 77, ../scss/_todoMVC.scss */
+  .todoBox .todoToggle:checked {
+    border-color: #5dc2af; }
+  /* line 81, ../scss/_todoMVC.scss */
+  .todoBox .todoToggle {
+    transition: border-color ease-in-out 50ms; }
+  /* line 85, ../scss/_todoMVC.scss */
+  .todoBox .todoToggle:checked::after, .todoBox .todoToggle:checked::before {
+    width: 1px;
+    opacity: 1; }
+  /* line 90, ../scss/_todoMVC.scss */
+  .todoBox .todoToggle:checked::after {
+    height: 15px;
+    transform: rotate(40deg) translate(2px, -1px);
+    -webkit-transform: rotate(40deg) translate(2px, -1px); }
+  /* line 96, ../scss/_todoMVC.scss */
+  .todoBox .todoToggle::after, .todoBox .todoToggle::before {
+    opacity: 0;
+    height: 0px;
+    background-color: #5dc2af;
+    transition: height ease-in-out 100ms, transform ease-in-out 100ms;
+    -webkit-transition: height ease-in-out 100ms, -webkit-transform ease-in-out 100ms; }
+  /* line 103, ../scss/_todoMVC.scss */
+  .todoBox .todoToggle:checked::before {
+    height: 7px;
+    transform: rotate(-41deg) translate(-6px, 0px);
+    -webkit-transform: rotate(-41deg) translate(-6px, 0px); }
+  /* line 109, ../scss/_todoMVC.scss */
+  .todoBox .todoDelete::after, .todoBox .todoDelete::before,
+  .todoBox .todoToggle::after, .todoBox .todoToggle::before {
+    content: '';
+    display: block;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    right: 0px;
+    bottom: 0px;
+    margin: auto; }
+  /* line 122, ../scss/_todoMVC.scss */
+  .todoBox .todoToggle:checked::after {
+    /*/content: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="40"…3"/><path fill="#5dc2af" d="M72 25L42 71 27 56l-4 4 20 20 34-52z"/></svg>');*/ }
+  /* line 125, ../scss/_todoMVC.scss */
+  .todoBox .todoToggle::after {
+    /*content: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="40"…"50" cy="50" r="50" fill="none" stroke="#ededed" stroke-width="3"/></svg>');*/ }
+  /* line 129, ../scss/_todoMVC.scss */
+  .todoBox .completed .todoDescription {
+    text-decoration: line-through;
+    color: #ddd; }
+  /* line 133, ../scss/_todoMVC.scss */
+  .todoBox .todoDescription {
+    flex: 1;
+    -webkit-flex: 1;
+    border: none;
+    padding: 10px 10px;
+    line-height: 30px;
+    font-size: 30px;
+    transition: color ease-in-out 100ms;
+    -webkit-transition: color ease-in-out 100ms;
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    -ms-user-select: none; }
+  /* line 147, ../scss/_todoMVC.scss */
+  .todoBox .todoDescription:focus {
+    color: #000;
+    font-weight: 200; }
+  /* line 153, ../scss/_todoMVC.scss */
+  .todoBox .todoDelete::after, .todoBox .todoDelete::before {
+    width: 1px;
+    height: 20px;
+    margin: auto;
+    background-color: gray; }
+  /* line 160, ../scss/_todoMVC.scss */
+  .todoBox .todoDelete::after {
+    transform: rotate(45deg);
+    -webkit-transform: rotate(45deg); }
+  /* line 166, ../scss/_todoMVC.scss */
+  .todoBox .todoDelete::before {
+    transform: rotate(135deg);
+    -webkit-transform: rotate(135deg); }
+  /* line 171, ../scss/_todoMVC.scss */
+  .todoBox .todoFooter {
+    height: 50px;
+    display: flex;
+    display: -webkit-flex;
+    flex-direction: row;
+    -webkit-flex-direction: row;
+    padding: 0px 20px; }
+  /* line 180, ../scss/_todoMVC.scss */
+  .todoBox .todoSwitchBox {
+    flex: 1;
+    -webkit-flex: 1;
+    display: flex;
+    display: -webkit-flex;
+    flex-direction: row;
+    -webkit-flex-direction: row;
+    justify-content: center;
+    -webkit-justify-content: center;
+    align-items: center;
+    -webkit-align-items: center; }
+  /* line 194, ../scss/_todoMVC.scss */
+  .todoBox .todoSwitch [type="radio"] {
+    display: none; }
+  /* line 198, ../scss/_todoMVC.scss */
+  .todoBox .todoSwitch [type="radio"] + label {
+    padding: 5px 10px; }
+  /* line 202, ../scss/_todoMVC.scss */
+  .todoBox .todoSwitch [type="radio"]:checked + label {
+    border: 1px solid rgba(93, 194, 175, 0.5);
+    border-radius: 3px;
+    color: #5dc2af; }
+  /* line 210, ../scss/_todoMVC.scss */
+  .todoBox .btn-clr {
+    border: none;
+    background: none;
+    font-size: 12px; }
+  /* line 216, ../scss/_todoMVC.scss */
+  .todoBox .countsNumber {
+    padding-right: 4px;
+    line-height: 50px; }
+
+/* line 3, ../scss/base.scss */
+*, *:before, *:after {
+  margin: 0px;
+  padding: 0px;
+  box-sizing: border-box; }
+
+/* line 9, ../scss/base.scss */
+ul, ol {
+  list-style: none; }
+
+/* line 13, ../scss/base.scss */
+html, body, .mainBox {
+  height: 100%;
+  width: 100%;
+  background-color: #f8f8f8;
+  font-family: Capitan; }
+
+/* line 20, ../scss/base.scss */
+input, button {
+  outline: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none; }
+
+/* line 27, ../scss/base.scss */
+.mainBox {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex; }
+
+/* line 34, ../scss/base.scss */
+.navBox {
+  width: 250px;
+  height: 100%;
+  padding-top: 30px;
+  background-color: #29292B; }
+
+/* line 43, ../scss/base.scss */
+.navSection {
+  padding: 10px 30px;
+  padding-left: 0;
+  -webkit-transition: all 150ms ease-in-out 0s;
+  transition: all 150ms ease-in-out 0s; }
+  /* line 49, ../scss/base.scss */
+  .navSection.active {
+    background-color: #222;
+    box-shadow: inset 0 1px 2px -1px #0E0E0E, inset 0 -1px 2px -2px #191919; }
+
+/* line 57, ../scss/base.scss */
+.navSectionTitle,
+.navSectionItem {
+  padding: 3px 0;
+  padding-left: 30px; }
+
+/* line 63, ../scss/base.scss */
+.navSectionTitle {
+  margin-bottom: 10px;
+  font-size: 12px;
+  font-weight: 700;
+  color: #555;
+  text-transform: uppercase; }
+
+/* line 77, ../scss/base.scss */
+.navSectionItem {
+  color: #b8b8b8;
+  cursor: pointer;
+  position: relative;
+  -webkit-transition: color 150ms;
+  transition: color 150ms; }
+  /* line 86, ../scss/base.scss */
+  .navSectionItem:before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    height: 0px;
+    width: 0px;
+    margin: auto;
+    background-color: cadetblue;
+    -webkit-transition: all 150ms ease-in-out 0s;
+    transition: all 150ms ease-in-out 0s; }
+  /* line 100, ../scss/base.scss */
+  .navSectionItem.active {
+    color: #eee; }
+    /* line 103, ../scss/base.scss */
+    .navSectionItem.active:before {
+      height: 20px;
+      width: 3px; }
+
+/* line 110, ../scss/base.scss */
+.contentBox {
+  position: relative;
+  -webkit-box-flex: 1;
+  -webkit-flex: 1;
+  -ms-flex: 1;
+  flex: 1;
+  box-shadow: -1px 0 4px -1px black; }

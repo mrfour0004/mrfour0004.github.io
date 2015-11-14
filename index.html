@@ -1,19 +1,29 @@
 <!DOCTYPE html>
 <html>
-  <head>
+<head>
     <meta charset="utf-8">
-    <title>TodoMVC - React</title>
-    <link rel="stylesheet" href="css/base.css" />
+    <title>mrfour - Portfolio</title>
+    <link rel="stylesheet" href="css/stylesheets/base.css" />
     <link href='https://fonts.googleapis.com/css?family=Work+Sans:100,200,300,500' rel='stylesheet' type='text/css'>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/react/0.13.0/react-with-addons.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/react/0.13.0/JSXTransformer.js"></script>
+</head>
+<body>
+    <div id="content" class="mainBox"></div>
+
+    <!-- JS Frameworks, must be loaded first  -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/react/0.14.2/react-with-addons.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/react/0.14.2/react-dom.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <!-- JS Plugins  -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/marked/0.3.2/marked.min.js"></script>
-  </head>
-  <body>
-    <div id="content"></div>
-    <script src="scripts/localforage.js"></script>
-    <script src="scripts/todos.js"></script>
-    <script type="text/jsx;harmony=true" src="components/todobox.js"></script>
-  </body>
+    <script src="scripts/plugins/localforage.js"></script>
+    <script src="scripts/plugins/classNames.js"></script>
+    <script src="scripts/build/utils.js"></script>
+    <!-- JSX Files -->
+    <script type="text/javascript" src="scripts/build/todoMVC/todos.js"></script>
+    <script type="text/javascript" src="scripts/build/todoMVC/todobox.js"></script>
+    <script type="text/javascript" src="scripts/build/dailyUI/001_signup.js"></script>
+    <!-- Owned js files  -->
+    <script type="text/javascript" src="scripts/build/route.js"></script>
+    <script type="text/javascript" src="scripts/build/main.js"></script>
+</body>
 </html>

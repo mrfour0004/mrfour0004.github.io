@@ -1,0 +1,220 @@
+.todoBox {
+    width: 500px;
+    margin: auto;
+    margin-top: 100px;
+    box-shadow: 0px 0px 30px 2px #DCDCDC;
+    background-color: white;
+
+    input {
+        font-weight: 100;
+    }
+
+    input, button {
+        font-family: 'Work Sans', 'Josefin Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+        font-weight: 200;
+    }
+
+
+    & > * {
+        width: 100%;
+    }
+
+
+    .todoInput {
+        padding: 15px 35px;
+        font-size: 25px;
+        font-style: italic;
+        border: none;
+        border-bottom: 1px solid #EAEAEA;
+        box-shadow: inset 0px -5px 15px -10px #A7A7A7;
+    }
+
+    .todoList {
+
+    }
+
+    .todoItem {
+        height: 55px;
+        display: flex;
+        display: -webkit-flex;
+        flex-direction: row;
+        -webkit-flex-direction: row;
+        justify-content: flex-start;
+        -webkit-justify-content: flex-start;
+        border-bottom: 1px solid #EAEAEA;
+        transition: all ease-in-out 150ms;
+    }
+
+    .todoItem.hide {
+        height: 0px;
+        opacity: 0;
+    }
+
+    .todoDelete, .todoToggle {
+        position: relative;
+    }
+
+    .todoItem:hover .todoDelete {
+        opacity: 1;
+        pointer-events: auto;
+    }
+
+    .todoDelete {
+        opacity: 0;
+        pointer-events: none;
+        height: 55px;
+        width: 55px;
+    }
+
+    .todoToggle {
+        width: 30px;
+        height: 30px;
+        margin: 12.5px;
+        border: 1px solid #ccc;
+        border-radius: 50%;
+    }
+
+    .todoToggle:checked {
+        border-color: #5dc2af;
+    }
+
+    .todoToggle {
+        transition: border-color ease-in-out 50ms;
+    }
+
+    .todoToggle:checked::after, .todoToggle:checked::before {
+        width: 1px;
+        opacity: 1;
+    }
+
+    .todoToggle:checked::after {
+        height: 15px;
+        transform: rotate(40deg) translate(2px, -1px);
+        -webkit-transform: rotate(40deg) translate(2px, -1px);
+    }
+
+    .todoToggle::after, .todoToggle::before {
+        opacity: 0;
+        height: 0px;
+        background-color: #5dc2af;
+        transition: height ease-in-out 100ms, transform ease-in-out 100ms;
+        -webkit-transition: height ease-in-out 100ms, -webkit-transform ease-in-out 100ms;
+    }
+    .todoToggle:checked::before {
+        height: 7px;
+        transform: rotate(-41deg) translate(-6px, 0px);
+        -webkit-transform: rotate(-41deg) translate(-6px, 0px);
+    }
+
+    .todoDelete::after, .todoDelete::before,
+    .todoToggle::after, .todoToggle::before {
+        content: '';
+        display: block;
+        position: absolute;
+        top: 0px;
+        left: 0px;
+        right: 0px;
+        bottom: 0px;
+        margin: auto;
+    }
+
+
+    .todoToggle:checked::after {
+        /*/content: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="40"…3"/><path fill="#5dc2af" d="M72 25L42 71 27 56l-4 4 20 20 34-52z"/></svg>');*/
+    }
+    .todoToggle::after {
+        /*content: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="40"…"50" cy="50" r="50" fill="none" stroke="#ededed" stroke-width="3"/></svg>');*/
+    }
+
+    .completed .todoDescription {
+        text-decoration: line-through;
+        color: #ddd;
+    }
+    .todoDescription {
+        flex: 1;
+        -webkit-flex: 1;
+        border: none;
+        padding: 10px 10px;
+        line-height: 30px;
+        font-size: 30px;
+        transition: color ease-in-out 100ms;
+        -webkit-transition: color ease-in-out 100ms;
+        -moz-user-select: none;
+        -webkit-user-select: none;
+        -ms-user-select: none;
+    }
+
+    .todoDescription:focus {
+        color: #000;
+        font-weight: 200;
+    }
+
+
+    .todoDelete::after, .todoDelete::before {
+        width: 1px;
+        height: 20px;
+        margin: auto;
+        background-color: gray;
+    }
+
+    .todoDelete::after {
+        transform: rotate(45deg);
+        -webkit-transform: rotate(45deg);
+    }
+
+
+    .todoDelete::before {
+        transform: rotate(135deg);
+        -webkit-transform: rotate(135deg);
+    }
+
+    .todoFooter {
+        height: 50px;
+        display: flex;
+        display: -webkit-flex;
+        flex-direction: row;
+        -webkit-flex-direction: row;
+        padding: 0px 20px;
+    }
+
+    .todoSwitchBox {
+        flex: 1;
+        -webkit-flex: 1;
+        display: flex;
+        display: -webkit-flex;
+        flex-direction: row;
+        -webkit-flex-direction: row;
+        justify-content: center;
+        -webkit-justify-content: center;
+        align-items: center;
+        -webkit-align-items: center;
+    }
+
+    .todoSwitch {
+        [type="radio"] {
+            display: none;
+        }
+
+        [type="radio"] + label {
+            padding: 5px 10px;
+        }
+
+        [type="radio"]:checked + label {
+            border: 1px solid rgba(93, 194, 175, 0.5);
+            border-radius: 3px;
+            color: #5dc2af;
+        }
+    }
+
+
+    .btn-clr {
+        border: none;
+        background: none;
+        font-size: 12px;
+    }
+
+    .countsNumber {
+        padding-right:4px;
+        line-height: 50px;
+    }
+}
