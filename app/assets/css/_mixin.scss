@@ -1,0 +1,19 @@
+@mixin x-fullScreenWithAbsolute() {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    top: 0;
+}
+
+@mixin x-middleBox() {
+    @include x-fullScreenWithAbsolute();
+    margin: auto;
+}
+
+@mixin x-flexbox() {
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+}

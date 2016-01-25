@@ -1,0 +1,284 @@
+@import '_mixin.scss';
+
+$d001-themeColor: #F19C57;
+
+.dailyui001 {
+    background-color: #EEE4DC;
+}
+
+.dailyui001Box {
+    @include x-middleBox();
+    width: 450px;
+    height: 570px;
+
+    background-color: white;
+    box-shadow: 0 70px 150px -30px rgba(0, 0, 0, 0.77);
+
+    .signPhaseBox {
+        @include x-fullScreenWithAbsolute();
+
+        color: $d001-themeColor;
+        opacity: 0;
+        pointer-events: none;
+
+        -webkit-transition: all 200ms;
+        transition: all 200ms;
+
+        &.current {
+            opacity: 1;
+            pointer-events: auto;
+        }
+    }
+
+    .landingBox {
+        padding: 63px 40px;
+        text-align: center;
+    }
+
+    .signLogoBox {
+        position: relative;
+        width: 200px;
+        height: 200px;
+        margin: auto;
+        margin-bottom: 15px;
+    }
+
+    .signLogo {
+        width: 100%;
+        height: 100%;
+        background-size: contain;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-image: require("../../images/signLogo.svg");
+    }
+
+    .title {
+        margin-bottom: 35px;
+        color: $d001-themeColor;
+        font-size: 45px;
+        font-weight: 400;
+    }
+
+    .subTitle {
+        margin-bottom: 40px;
+        color: $d001-themeColor;
+        font-weight: 200;
+    }
+
+    .u-btn-box {
+        @include x-flexbox();
+        -webkit-box-align: center;
+        -webkit-align-items: center;
+        -ms-flex-align: center;
+        align-items: center;
+        cursor: pointer;
+        -webkit-box-flex: 1;
+        -webkit-flex: 1 1 0;
+        -ms-flex: 1 1 0;
+        flex: 1 1 0;
+
+        span, p {
+            pointer-events: none;
+        }
+
+        &:last-child {
+            @include x-flexbox();
+            -webkit-box-pack: end;
+            -webkit-justify-content: flex-end;
+            -ms-flex-pack: end;
+            justify-content: flex-end;
+        }
+    }
+
+    .c-btn {
+        position: relative;
+        padding: 20px 50px;
+        font-size: 18px;
+        text-transform: uppercase;
+
+        background-color: white;
+        border-radius: 100px;
+
+        -webkit-transition: all 300ms;
+        transition: all 300ms;
+
+        p {
+            position: relative;
+        }
+
+        &:active {
+            -webkit-transform: scale(0.95);
+            -ms-transform: scale(0.95);
+            transform: scale(0.95);
+        }
+
+        &:before,
+        &:after {
+            @include x-fullScreenWithAbsolute();
+            content: '';
+            border-radius: 100px;
+            -webkit-transition: all 300ms;
+            transition: all 300ms;
+            // -webkit-transform: scale(0.95);
+            //     -ms-transform: scale(0.95);
+            //         transform: scale(0.95);
+        }
+
+        &:hover {
+            &:before {
+                // -webkit-transform: scale(1);
+                //     -ms-transform: scale(1);
+                //         transform: scale(1);
+            }
+        }
+
+        &-signIn {
+            color: white;
+            border: 1px solid $d001-themeColor;
+
+            &:before {
+                box-shadow: inset 0 0 0 32px $d001-themeColor;
+            }
+
+            &:hover {
+                color: $d001-themeColor;
+
+                &:before {
+                    box-shadow: inset 0 0 0 0px white;
+                }
+            }
+        }
+
+        &-signUp {
+            color: $d001-themeColor;
+
+            &:before {
+                box-shadow: inset 0 0 0 32px white, inset 0 0 0 32px $d001-themeColor;
+            }
+
+            &:after {
+                border: 1px solid $d001-themeColor;
+            }
+
+            &:hover {
+                color: white;
+                &:before {
+                    box-shadow: inset 0 0 0 0px $d001-themeColor, inset 0 0 0 32px $d001-themeColor;
+                }
+
+                &:after {
+                    opacity: 0;
+                    -webkit-transform: scale(1.15);
+                    -ms-transform: scale(1.15);
+                    transform: scale(1.15);
+                }
+            }
+
+
+        }
+    }
+
+    .c-icon {
+        position: relative;
+        width: 30px;
+        height: 30px;
+
+        &:before,
+        &:after {
+            @include x-middleBox();
+            content: '';
+            background-color: #aaa;
+        }
+
+        &-back {
+
+            &:before,
+            &:after {
+                width: 1px;
+                height: 11px;
+            }
+
+            &:before {
+                transform: rotate(45deg) translate(-3px, -2px);
+            }
+
+            &:after {
+                transform: rotate(-45deg) translate(-3px, 2px);
+            }
+        }
+
+        &-cross {
+            &:before,
+            &:after {
+                width: 1px;
+                height: 20px;
+            }
+
+            &:after {
+                -webkit-transform: rotate(45deg);
+                -ms-transform: rotate(45deg);
+                transform: rotate(45deg);
+            }
+
+            &:before {
+                -webkit-transform: rotate(-45deg);
+                -ms-transform: rotate(-45deg);
+                transform: rotate(-45deg);
+            }
+        }
+    }
+
+    .signNavBox {
+        @include x-flexbox();
+        -webkit-box-pack: justify;
+        -webkit-justify-content: space-between;
+        -ms-flex-pack: justify;
+        justify-content: space-between;
+        -webkit-box-align: center;
+        -webkit-align-items: center;
+        -ms-flex-align: center;
+        align-items: center;
+
+        padding: 15px;
+    }
+
+    .navTitle {
+        font-size: 40px;
+        font-weight: 200;
+    }
+
+    .signInputBox {
+        position: relative;
+        margin: 10px 50px;
+        padding-top: 10px;
+    }
+
+    .signInputLabel {
+        position: absolute;
+        top: 0;
+        left: 10px;
+        font-size: 16px;
+        margin-bottom: 10px;
+
+        pointer-events: none;
+        transition: all 300ms;
+    }
+
+    .signInput {
+        height: 50px;
+        width: 100%;
+        padding: 0 10px;
+
+        font-size: 28px;
+        font-weight: 100;
+        color: #888;
+        border-bottom: 1px solid #F1C4A0;
+        background: transparent;
+
+        &:invalid:not(:focus) + .signInputLabel {
+            top: 20px;
+            font-size: 28px;
+            color: #F1C4A0;
+        }
+    }
+}

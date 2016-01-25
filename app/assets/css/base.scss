@@ -1,4 +1,6 @@
-@import "todoMVC";
+@import "_todoMVC.scss";
+@import "_dailyUI001.scss";
+@import "_mixin.scss";
 
 *, *:before, *:after {
     margin: 0px;
@@ -6,22 +8,54 @@
     box-sizing: border-box;
 }
 
+a {
+    color: inherit;
+    text-decoration: none;
+}
+
 ul, ol {
     list-style: none;
 }
 
-html, body, .mainBox {
+html, body, #content, .mainBox {
     height: 100%;
     width: 100%;
     background-color: #f8f8f8;
-    font-family: Capitan;
+    font-family: 'Work Sans', 'Josefin Sans', Helvetica, Arial, sans-serif;
 }
 
 input, button {
-    outline: none;
+    border: none;
+    outline: none; /* disable the select highlight */
     -webkit-appearance: none;
     -moz-appearance: none;
-    appearance: none;
+    appearance: none; /* disable the default layout of input. ex: checkbox... */
+}
+
+button {
+    cursor: pointer;
+}
+
+.l-flex {
+    @include x-flexbox();
+
+    &-between {
+        @extend .l-flex;
+        -webkit-box-pack: justify;
+        -ms-flex-pack: justify;
+        -webkit-justify-content: space-between;
+        justify-content: space-between;
+    }
+}
+
+
+.middleBox {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    top: 0;
+    margin: auto;
 }
 
 .mainBox {
@@ -75,13 +109,24 @@ input, button {
 }
 
 .navSectionItem {
-    color: #b8b8b8;
+    margin-bottom: 10px;
+
     cursor: pointer;
     position: relative;
 
+    color: #b8b8b8;
+    text-decoration: none;
     -webkit-transition: color 150ms;
-
     transition: color 150ms;
+
+    &:last-child {
+        margin-bottom: 0;
+    }
+
+    a {
+        display: block;
+        width: 100%;
+    }
 
     &:before {
         content: '';
@@ -97,8 +142,13 @@ input, button {
         transition: all 150ms ease-in-out 0s;
     }
 
+    &:hover {
+        color: cadetblue;
+    }
+
     &.active {
-        color: #eee;
+        pointer-events: none;
+        color: cadetblue;
 
         &:before {
             height: 20px;
@@ -116,4 +166,6 @@ input, button {
     flex: 1;
 
     box-shadow: -1px 0 4px -1px black;
+    -webkit-transition: all 150ms;
+    transition: all 150ms;
 }

@@ -1,8 +1,10 @@
+@import "_mixin.scss";
+
 .todoBox {
     width: 500px;
     margin: auto;
     margin-top: 100px;
-    box-shadow: 0px 0px 30px 2px #DCDCDC;
+    box-shadow: 0px 0px 30px 2px rgba(0, 0, 0, 0.2);
     background-color: white;
 
     input {
@@ -35,13 +37,21 @@
 
     .todoItem {
         height: 55px;
+        display: -webkit-box;
+        display: -ms-flexbox;
         display: flex;
         display: -webkit-flex;
-        flex-direction: row;
+        -webkit-box-orient: horizontal;
+        -webkit-box-direction: normal;
+            -ms-flex-direction: row;
+                flex-direction: row;
         -webkit-flex-direction: row;
-        justify-content: flex-start;
+        -webkit-box-pack: start;
+            -ms-flex-pack: start;
+                justify-content: flex-start;
         -webkit-justify-content: flex-start;
         border-bottom: 1px solid #EAEAEA;
+        -webkit-transition: all ease-in-out 150ms;
         transition: all ease-in-out 150ms;
     }
 
@@ -79,6 +89,7 @@
     }
 
     .todoToggle {
+        -webkit-transition: border-color ease-in-out 50ms;
         transition: border-color ease-in-out 50ms;
     }
 
@@ -89,7 +100,8 @@
 
     .todoToggle:checked::after {
         height: 15px;
-        transform: rotate(40deg) translate(2px, -1px);
+        -ms-transform: rotate(40deg) translate(2px, -1px);
+            transform: rotate(40deg) translate(2px, -1px);
         -webkit-transform: rotate(40deg) translate(2px, -1px);
     }
 
@@ -97,12 +109,15 @@
         opacity: 0;
         height: 0px;
         background-color: #5dc2af;
+        transition: height ease-in-out 100ms, -webkit-transform ease-in-out 100ms;
         transition: height ease-in-out 100ms, transform ease-in-out 100ms;
+        transition: height ease-in-out 100ms, transform ease-in-out 100ms, -webkit-transform ease-in-out 100ms;
         -webkit-transition: height ease-in-out 100ms, -webkit-transform ease-in-out 100ms;
     }
     .todoToggle:checked::before {
         height: 7px;
-        transform: rotate(-41deg) translate(-6px, 0px);
+        -ms-transform: rotate(-41deg) translate(-6px, 0px);
+            transform: rotate(-41deg) translate(-6px, 0px);
         -webkit-transform: rotate(-41deg) translate(-6px, 0px);
     }
 
@@ -131,7 +146,9 @@
         color: #ddd;
     }
     .todoDescription {
-        flex: 1;
+        -webkit-box-flex: 1;
+            -ms-flex: 1;
+                flex: 1;
         -webkit-flex: 1;
         border: none;
         padding: 10px 10px;
@@ -158,35 +175,54 @@
     }
 
     .todoDelete::after {
-        transform: rotate(45deg);
+        -ms-transform: rotate(45deg);
+            transform: rotate(45deg);
         -webkit-transform: rotate(45deg);
     }
 
 
     .todoDelete::before {
-        transform: rotate(135deg);
+        -ms-transform: rotate(135deg);
+            transform: rotate(135deg);
         -webkit-transform: rotate(135deg);
     }
 
     .todoFooter {
         height: 50px;
-        display: flex;
-        display: -webkit-flex;
-        flex-direction: row;
+
+        @include x-flexbox();
+
+        -webkit-box-orient: horizontal;
+        -webkit-box-direction: normal;
+            -ms-flex-direction: row;
+                flex-direction: row;
         -webkit-flex-direction: row;
         padding: 0px 20px;
+        color: #444;
+    font-weight: 300;
     }
 
     .todoSwitchBox {
-        flex: 1;
+        -webkit-box-flex: 1;
+            -ms-flex: 1;
+                flex: 1;
         -webkit-flex: 1;
+        display: -webkit-box;
+        display: -ms-flexbox;
         display: flex;
         display: -webkit-flex;
-        flex-direction: row;
+        -webkit-box-orient: horizontal;
+        -webkit-box-direction: normal;
+            -ms-flex-direction: row;
+                flex-direction: row;
         -webkit-flex-direction: row;
-        justify-content: center;
+        -webkit-box-pack: center;
+            -ms-flex-pack: center;
+                justify-content: center;
         -webkit-justify-content: center;
-        align-items: center;
+        -webkit-box-align: center;
+            -ms-flex-align: center;
+                align-items: center;
         -webkit-align-items: center;
     }
 
