@@ -27,7 +27,7 @@ var config = {
         }]
     },
     resolve: {
-        modulesDirectories: ['node_modules', 'app/js', 'app/js/views', 'app/js/reducers', 'app/js/actions', 'app/assets/css']
+        modulesDirectories: ['node_modules', 'app/js', 'app/js/views', 'app/js/reducers', 'app/js/actions', 'app/assets/css', 'app/js/views/components']
     },
     plugins: [
         new HTMLWebpackPlugin({
