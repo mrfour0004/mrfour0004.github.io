@@ -43,12 +43,12 @@
         display: -webkit-flex;
         -webkit-box-orient: horizontal;
         -webkit-box-direction: normal;
-            -ms-flex-direction: row;
-                flex-direction: row;
+        -ms-flex-direction: row;
+        flex-direction: row;
         -webkit-flex-direction: row;
         -webkit-box-pack: start;
-            -ms-flex-pack: start;
-                justify-content: flex-start;
+        -ms-flex-pack: start;
+        justify-content: flex-start;
         -webkit-justify-content: flex-start;
         border-bottom: 1px solid #EAEAEA;
         -webkit-transition: all ease-in-out 150ms;
@@ -101,7 +101,7 @@
     .todoToggle:checked::after {
         height: 15px;
         -ms-transform: rotate(40deg) translate(2px, -1px);
-            transform: rotate(40deg) translate(2px, -1px);
+        transform: rotate(40deg) translate(2px, -1px);
         -webkit-transform: rotate(40deg) translate(2px, -1px);
     }
 
@@ -117,7 +117,7 @@
     .todoToggle:checked::before {
         height: 7px;
         -ms-transform: rotate(-41deg) translate(-6px, 0px);
-            transform: rotate(-41deg) translate(-6px, 0px);
+        transform: rotate(-41deg) translate(-6px, 0px);
         -webkit-transform: rotate(-41deg) translate(-6px, 0px);
     }
 
@@ -147,8 +147,8 @@
     }
     .todoDescription {
         -webkit-box-flex: 1;
-            -ms-flex: 1;
-                flex: 1;
+        -ms-flex: 1;
+        flex: 1;
         -webkit-flex: 1;
         border: none;
         padding: 10px 10px;
@@ -175,55 +175,31 @@
     }
 
     .todoDelete::after {
-        -ms-transform: rotate(45deg);
-            transform: rotate(45deg);
-        -webkit-transform: rotate(45deg);
+        transform: rotate(45deg);
     }
 
 
     .todoDelete::before {
-        -ms-transform: rotate(135deg);
-            transform: rotate(135deg);
-        -webkit-transform: rotate(135deg);
+        transform: rotate(135deg);
     }
 
     .todoFooter {
         height: 50px;
 
-        @include x-flexbox();
+        display: flex;
+        flex-direction: row;
 
-        -webkit-box-orient: horizontal;
-        -webkit-box-direction: normal;
-            -ms-flex-direction: row;
-                flex-direction: row;
-        -webkit-flex-direction: row;
         padding: 0px 20px;
         color: #444;
-    font-weight: 300;
+        font-weight: 300;
     }
 
     .todoSwitchBox {
-        -webkit-box-flex: 1;
-            -ms-flex: 1;
-                flex: 1;
-        -webkit-flex: 1;
-        display: -webkit-box;
-        display: -ms-flexbox;
+        flex: 1;
         display: flex;
-        display: -webkit-flex;
-        -webkit-box-orient: horizontal;
-        -webkit-box-direction: normal;
-            -ms-flex-direction: row;
-                flex-direction: row;
-        -webkit-flex-direction: row;
-        -webkit-box-pack: center;
-            -ms-flex-pack: center;
-                justify-content: center;
-        -webkit-justify-content: center;
-        -webkit-box-align: center;
-            -ms-flex-align: center;
-                align-items: center;
-        -webkit-align-items: center;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
     }
 
     .todoSwitch {

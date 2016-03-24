@@ -5,8 +5,8 @@ var CommonsChunkPlugin = require("webpack/lib/optimize/CommonsChunkPlugin");
 
 // let webpack fetch the minified js files, instead of going to nodes_modules.
 var node_modules = path.resolve(__dirname, 'node_modules');
-var pathToReact = path.resolve(node_modules, 'react/dist/react-with-addons.js');
-var pathToReactDOM = path.resolve(node_modules, 'react-dom/dist/react-dom.min.js');
+//var pathToReact = path.resolve(node_modules, 'react/dist/react-with-addons.min.js');
+//var pathToReactDOM = path.resolve(node_modules, 'react-dom/dist/react-dom.min.js');
 
 var config = {
     entry: {
@@ -45,10 +45,10 @@ var config = {
     resolve: {
 
         alias: { // Replace modules by other modules or paths.
-            'react': pathToReact,
-            'react-dom': pathToReactDOM
+        //    'react': pathToReact,
+        //    'react-dom': pathToReactDOM
         },
-        modulesDirectories: ['node_modules', 'app/js', 'app/js/views', 'app/js/reducers', 'app/js/actions', 'app/assets/css']
+        modulesDirectories: ['node_modules', 'app/js', 'app/js/views', 'app/js/reducers', 'app/js/actions', 'app/assets/css', 'app/js/views/components']
     },
     plugins: [
         new HTMLWebpackPlugin({
@@ -58,7 +58,7 @@ var config = {
             inject: "body"
         }),
         new ExtractTextPlugin("./build/[name].css"),
-        new CommonsChunkPlugin('./build/vendors.js')
+        new CommonsChunkPlugin('venders', './build/vendor.js')
     ]
 };
 

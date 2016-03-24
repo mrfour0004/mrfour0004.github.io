@@ -18,7 +18,8 @@ export default class utils {
             new ListCategory("Profile", []),
             new ListCategory("Gallery", [
                 new ListItem("TodoMVC", "todomvc"),
-                new ListItem("TodoRedux", "todoredux")
+                //new ListItem("TodoRedux", "todoredux"),
+                new ListItem("Reddit", "reddit")
             ])/*,
             new ListCategory("DailyUI", [
                 new ListItem("DailyUI001", "day001")

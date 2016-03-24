@@ -98,7 +98,7 @@ class NavBox extends BaseComponent {
         return (
             <div className="mainBox">
                 <NavBox {...routeProps} />
-                <div className="contentBox">
+                <div className="contentBox l-flex-stretch">
                     {React.Children.map(this.props.children, (child) => {
                         return React.cloneElement(child, {
                             dispatch: dispatch

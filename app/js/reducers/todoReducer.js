@@ -1,4 +1,3 @@
-import { combineReducers } from 'redux'
 import { ActionTypes, Filters } from 'todoActions'
 
 const { SHOW_ALL } = Filters;
@@ -44,10 +43,3 @@ export function todoFilter(state = SHOW_ALL, action) {
             return state
     }
 }
-
-/*
-export default combineReducers({
-    //visibilityFilter,
-    todos
-})
-*/

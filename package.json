@@ -1,7 +1,7 @@
 {
-  "name": "webpack-cookbook",
+  "name": "mrfour_portfolio",
   "version": "1.0.0",
-  "description": "It's Webpack Cookbook from fakefish",
+  "description": "It's mrfour's portfolio",
   "main": "index.js",
   "scripts": {
     "build": "webpack",
@@ -31,12 +31,18 @@
     "webpack-dev-server": "^1.14.0"
   },
   "dependencies": {
-    "history": "^2.0.0-rc2",
+    "deep-equal": "^1.0.1",
+    "es6-promise": "^3.1.2",
+    "history": "^2.0.0",
+    "isomorphic-fetch": "^2.2.1",
+    "logger": "0.0.1",
     "react": "^0.14.3",
     "react-dom": "^0.14.3",
     "react-redux": "^4.0.6",
-    "react-router": "^1.0.3",
-    "redux": "^3.0.5",
-    "redux-simple-router": "^2.0.4"
+    "react-router": "^2.0.0",
+    "redux": "^3.3.1",
+    "redux-logger": "^2.6.0",
+    "redux-simple-router": "^2.0.4",
+    "redux-thunk": "^1.0.3"
   }
 }

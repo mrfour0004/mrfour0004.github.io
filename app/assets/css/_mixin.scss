@@ -11,9 +11,9 @@
     margin: auto;
 }
 
-@mixin x-flexbox() {
-    display: -webkit-box;
-    display: -webkit-flex;
-    display: -ms-flexbox;
-    display: flex;
+@mixin x-bottomBox() {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
 }

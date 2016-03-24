@@ -1,6 +1,7 @@
 @import "_todoMVC.scss";
 @import "_dailyUI001.scss";
 @import "_mixin.scss";
+@import "_reddit.scss";
 
 *, *:before, *:after {
     margin: 0px;
@@ -20,8 +21,16 @@ ul, ol {
 html, body, #content, .mainBox {
     height: 100%;
     width: 100%;
+}
+
+body {
     background-color: #f8f8f8;
     font-family: 'Work Sans', 'Josefin Sans', Helvetica, Arial, sans-serif;
+}
+
+
+h1, h2, h3, h4, h5, h6 {
+    font-weight: 200;
 }
 
 input, button {
@@ -37,25 +46,47 @@ button {
 }
 
 .l-flex {
-    @include x-flexbox();
+    display: flex;
+
+    &-alignCenter {
+        align-items: center;
+    }
 
     &-between {
         @extend .l-flex;
-        -webkit-box-pack: justify;
-        -ms-flex-pack: justify;
-        -webkit-justify-content: space-between;
         justify-content: space-between;
+    }
+
+    &-stretch {
+        flex: 1;
     }
 }
 
+.c-btnLink {
+    position: relative;
+    transition: color 150ms;
+
+    &:before {
+        @include x-bottomBox();
+        margin: auto;
+        content: '';
+        display: block;
+        height: 1px;
+        width: 0px;
+        transition: width 150ms;
+    }
+
+    &:hover:before {
+        width: 100%;
+    }
+
+    &-reddit:before {
+        background-color: rgba(192, 91, 77, 0.8);
+    }
+}
 
 .middleBox {
-    position: absolute;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    top: 0;
-    margin: auto;
+    @include x-middleBox();
 }
 
 .mainBox {
@@ -159,13 +190,77 @@ button {
 
 .contentBox {
     position: relative;
-
-    -webkit-box-flex: 1;
-    -webkit-flex: 1;
-    -ms-flex: 1;
-    flex: 1;
-
+    overflow: auto;
     box-shadow: -1px 0 4px -1px black;
-    -webkit-transition: all 150ms;
     transition: all 150ms;
 }
+
+/* Google Loader */
+
+.googleLoader {
+    position: relative;
+    margin: 0px auto;
+    width: 60px;
+
+    &:before {
+        content:'';
+        display: block;
+        padding-top: 100%;
+    }
+
+    .circular {
+        animation: rotate 2s linear infinite;
+        height: 100%;
+        width: 100%;
+        position: absolute;
+        top: 0; bottom: 0; left: 0; right: 0;
+        margin: auto;
+        transform-origin: center center;
+    }
+
+    .path {
+        stroke-dasharray: 1, 200;
+        stroke-dashoffset: 0;
+        animation:
+        googleLoaderDash 1.5s ease-in-out infinite,
+        googleLoaderColor 6s ease-in-out infinite;
+        stroke-linecap: round;
+    }
+}
+
+
+@keyframes rotate {
+    100%{
+        transform: rotate(360deg);
+    }
+}
+@keyframes googleLoaderDash {
+    0%{
+        stroke-dasharray: 1, 200;
+        stroke-dashoffset: 0;
+    }
+    50%{
+        stroke-dasharray: 89, 200;
+        stroke-dashoffset: -35px;
+    }
+    100%{
+        stroke-dasharray: 89, 200;
+        stroke-dashoffset: -124px;
+    }
+}
+@keyframes googleLoaderColor {
+    100%, 0%{
+        stroke: #d62d20;
+    }
+    40%{
+        stroke: #0057e7;
+    }
+    66%{
+        stroke: #008744;
+    }
+    80%, 90%{
+        stroke: #ffa700;
+    }
+}
+
+/* End Google Loader */

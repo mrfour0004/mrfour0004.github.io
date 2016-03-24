@@ -66,15 +66,9 @@ $d001-themeColor: #F19C57;
     }
 
     .u-btn-box {
-        @include x-flexbox();
-        -webkit-box-align: center;
-        -webkit-align-items: center;
-        -ms-flex-align: center;
+        display: flex;
         align-items: center;
         cursor: pointer;
-        -webkit-box-flex: 1;
-        -webkit-flex: 1 1 0;
-        -ms-flex: 1 1 0;
         flex: 1 1 0;
 
         span, p {
@@ -82,10 +76,7 @@ $d001-themeColor: #F19C57;
         }
 
         &:last-child {
-            @include x-flexbox();
-            -webkit-box-pack: end;
-            -webkit-justify-content: flex-end;
-            -ms-flex-pack: end;
+            display: flex;
             justify-content: flex-end;
         }
     }
@@ -229,7 +220,7 @@ $d001-themeColor: #F19C57;
     }
 
     .signNavBox {
-        @include x-flexbox();
+        display: flex;
         -webkit-box-pack: justify;
         -webkit-justify-content: space-between;
         -ms-flex-pack: justify;

@@ -80,7 +80,7 @@ class TodoList extends BaseComponent {
             deleteHandler: this.props.deleteHandler,
             completeHandler: this.props.completeHandler
         }
-
+        console.log(this.props.todos);
         return (
             <ul className="todoList">
             {this.props.todos.map((todo, index) =>

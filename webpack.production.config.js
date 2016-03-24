@@ -1,12 +1,10 @@
 var path = require('path');
 var HTMLWebpackPlugin = require('html-webpack-plugin');
 var ExtractTextPlugin = require("extract-text-webpack-plugin");
+var DefinePlugin = require("webpack/lib/DefinePlugin")
 var CommonsChunkPlugin = require("webpack/lib/optimize/CommonsChunkPlugin");
 
-// let webpack fetch the minified js files, instead of going to nodes_modules.
 var node_modules = path.resolve(__dirname, 'node_modules');
-//var pathToReact = path.resolve(node_modules, 'react/dist/react-with-addons.js');
-//var pathToReactDOM = path.resolve(node_modules, 'react-dom/dist/react-dom.min.js');
 
 var config = {
     entry: {
@@ -28,15 +26,7 @@ var config = {
             loader: ExtractTextPlugin.extract("style","css!sass")
         }]
     },
-    /*
-    *    Options affecting the resolving of modules.
-    *    https://webpack.github.io/docs/configuration.html#resolve
-    */
     resolve: {
-        // alias: { // Replace modules by other modules or paths.
-        //     'react': pathToReact,
-        //     'react-dom': pathToReactDOM
-        // },
         modulesDirectories: ['node_modules', 'app/js', 'app/js/views', 'app/js/reducers', 'app/js/actions', 'app/assets/css']
     },
     plugins: [
@@ -47,6 +37,9 @@ var config = {
             inject: "body"
         }),
         new ExtractTextPlugin("./build/[name].css"),
+        new DefinePlugin({
+            'process.env.NODE_ENV': '"production"'
+        }),
         new CommonsChunkPlugin('venders', './build/vendor.js')
     ]
 };
